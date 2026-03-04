@@ -127,18 +127,18 @@ jobs:
           path: "dist"       
       
       # Generate checksum.txt
-      #- name: Generate checksum.txt
-      #  run: |
-      #    cd dist
-      #    sha256sum * > checksum.txt
-      #    cd ..
-          # trying to fix stuff, most likely will forget about this
-      #- name: Generate a token
-      #  id: generate-token
-      #  uses: actions/create-github-app-token@v2
-      #  with:
-      #    app-id: ${{ vars.APP_ID }}
-      #    private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: Generate checksum.txt
+        run: |
+          cd dist
+          sha256sum * > checksum.txt
+          cd ..
+
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
           
       # Upload all artifacts to GitHub release
       - name: Upload release artifacts
