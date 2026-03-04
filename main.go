@@ -136,7 +136,7 @@ func main() {
 		"ServerDescription":                    "SERVER_DESCRIPTION",
 		"ServerPassword":                       "SERVER_PASSWORD",
 		"AdminPassword":                        "ADMIN_PASSWORD",
-		"PublicPort":                           "SERVER_PORT",
+		"PublicPort":                           "PUBLIC_PORT",
 		"RCONPort":                             "RCON_PORT",
 		"RCONEnabled":                          "RCON_ENABLE",
 		"bUseAuth":                             "USE_AUTH",
@@ -174,6 +174,9 @@ func main() {
 
 	// Assign value to "PublicIP" key using the function getIPAddressKey()
 	envVars["PublicIP"] = getIPAddressKey()
+
+	// Assign value to "PublicPort" key using the function getPortKey()
+	envVars["PublicPort"] = getPortKey()
 
 	// Specify validation rules for each key
 	envVarsValidationRules := map[string]string{
@@ -279,6 +282,7 @@ func main() {
 		"ServerDescription": true,
 		"BanListURL":        true,
 		"PublicIP":          true,
+		"PublicPort":        true,
 		"RandomizerSeed":    true,
 		// Add other keys as needed
 	}
@@ -506,3 +510,14 @@ func getIPAddressKey() string {
 	// Fallback to SERVER_IP if PUBLIC_IP is empty or does not exist
 	return "SERVER_IP"
 }
+
+func getPortKey() string {
+	// Check if PUBLIC_PORT environment variable exists and is not empty
+	val, ok := os.LookupEnv("PUBLIC_PORT")
+	if ok && val != "" {
+		return "PUBLIC_PORT"
+	}
+
+	// Fallback to SERVER_PORT if PUBLIC_PORT is empty or does not exist
+	return "SERVER_PORT"
+} // is this just a copy paste from above? yes. does it work? i hope so.
